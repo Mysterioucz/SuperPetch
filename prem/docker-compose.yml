@@ -1,0 +1,478 @@
+version: '3.8'
+
+services:
+  # PostgreSQL - Primary Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: pet-platform-postgres
+    environment:
+      POSTGRES_USER: petadmin
+      POSTGRES_PASSWORD: petpass123
+      POSTGRES_DB: pet_platform
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/database/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - pet-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U petadmin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # MongoDB - Chat & Logs
+  mongodb:
+    image: mongo:7
+    container_name: pet-platform-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: petadmin
+      MONGO_INITDB_ROOT_PASSWORD: petpass123
+      MONGO_INITDB_DATABASE: pet_platform_chat
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./infrastructure/database/mongodb/init.js:/docker-entrypoint-initdb.d/init.js
+    networks:
+      - pet-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis - Cache & Sessions
+  redis:
+    image: redis:7-alpine
+    container_name: pet-platform-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - pet-network
+    command: redis-server --appendonly yes --requirepass petredis123
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # RabbitMQ - Message Queue
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: pet-platform-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: petadmin
+      RABBITMQ_DEFAULT_PASS: petpass123
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - pet-network
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Elasticsearch - Search Engine
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: pet-platform-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - pet-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # MinIO - S3-compatible object storage
+  minio:
+    image: minio/minio:latest
+    container_name: pet-platform-minio
+    environment:
+      MINIO_ROOT_USER: petadmin
+      MINIO_ROOT_PASSWORD: petpass123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - pet-network
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  # API Gateway
+  gateway:
+    build:
+      context: ./backend/gateway
+      dockerfile: Dockerfile
+    container_name: pet-platform-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=petredis123
+      - AUTH_SERVICE_URL=http://auth-service:3001
+      - USER_SERVICE_URL=http://user-service:3002
+      - PET_SERVICE_URL=http://pet-service:3003
+      - MATCHING_SERVICE_URL=http://matching-service:3004
+      - CHAT_SERVICE_URL=http://chat-service:3005
+      - MARKETPLACE_SERVICE_URL=http://marketplace-service:3006
+      - ADMIN_SERVICE_URL=http://admin-service:3007
+    depends_on:
+      - redis
+      - rabbitmq
+    networks:
+      - pet-network
+    volumes:
+      - ./backend/gateway:/app
+      - /app/node_modules
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./backend/services/auth-service
+      dockerfile: Dockerfile
+    container_name: pet-auth-service
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=pet_platform
+      - DATABASE_USER=petadmin
+      - DATABASE_PASSWORD=petpass123
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=petredis123
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - JWT_EXPIRATION=24h
+      - RABBITMQ_URL=amqp://petadmin:petpass123@rabbitmq:5672
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+    networks:
+      - pet-network
+    volumes:
+      - ./backend/services/auth-service:/app
+      - /app/node_modules
+
+  # User & Profile Service
+  user-service:
+    build:
+      context: ./backend/services/user-service
+      dockerfile: Dockerfile
+    container_name: pet-user-service
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=pet_platform
+      - DATABASE_USER=petadmin
+      - DATABASE_PASSWORD=petpass123
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=petredis123
+      - RABBITMQ_URL=amqp://petadmin:petpass123@rabbitmq:5672
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=petadmin
+      - MINIO_SECRET_KEY=petpass123
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+      - minio
+    networks:
+      - pet-network
+    volumes:
+      - ./backend/services/user-service:/app
+      - /app/node_modules
+
+  # Pet Service
+  pet-service:
+    build:
+      context: ./backend/services/pet-service
+      dockerfile: Dockerfile
+    container_name: pet-pet-service
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=development
+      - PORT=3003
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=pet_platform
+      - DATABASE_USER=petadmin
+      - DATABASE_PASSWORD=petpass123
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=petredis123
+      - RABBITMQ_URL=amqp://petadmin:petpass123@rabbitmq:5672
+      - ELASTICSEARCH_NODE=http://elasticsearch:9200
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=petadmin
+      - MINIO_SECRET_KEY=petpass123
+      - ML_SERVICE_URL=http://ml-recommender:8000
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+      - elasticsearch
+      - minio
+    networks:
+      - pet-network
+    volumes:
+      - ./backend/services/pet-service:/app
+      - /app/node_modules
+
+  # Matching Service
+  matching-service:
+    build:
+      context: ./backend/services/matching-service
+      dockerfile: Dockerfile
+    container_name: pet-matching-service
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=development
+      - PORT=3004
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=pet_platform
+      - DATABASE_USER=petadmin
+      - DATABASE_PASSWORD=petpass123
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=petredis123
+      - RABBITMQ_URL=amqp://petadmin:petpass123@rabbitmq:5672
+      - ML_SERVICE_URL=http://ml-recommender:8000
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+    networks:
+      - pet-network
+    volumes:
+      - ./backend/services/matching-service:/app
+      - /app/node_modules
+
+  # Chat Service
+  chat-service:
+    build:
+      context: ./backend/services/chat-service
+      dockerfile: Dockerfile
+    container_name: pet-chat-service
+    ports:
+      - "3005:3005"
+    environment:
+      - NODE_ENV=development
+      - PORT=3005
+      - MONGODB_URI=mongodb://petadmin:petpass123@mongodb:27017/pet_platform_chat?authSource=admin
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=petredis123
+      - RABBITMQ_URL=amqp://petadmin:petpass123@rabbitmq:5672
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=petadmin
+      - MINIO_SECRET_KEY=petpass123
+    depends_on:
+      - mongodb
+      - redis
+      - rabbitmq
+      - minio
+    networks:
+      - pet-network
+    volumes:
+      - ./backend/services/chat-service:/app
+      - /app/node_modules
+
+  # Marketplace Service
+  marketplace-service:
+    build:
+      context: ./backend/services/marketplace-service
+      dockerfile: Dockerfile
+    container_name: pet-marketplace-service
+    ports:
+      - "3006:3006"
+    environment:
+      - NODE_ENV=development
+      - PORT=3006
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=pet_platform
+      - DATABASE_USER=petadmin
+      - DATABASE_PASSWORD=petpass123
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=petredis123
+      - RABBITMQ_URL=amqp://petadmin:petpass123@rabbitmq:5672
+      - ELASTICSEARCH_NODE=http://elasticsearch:9200
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=petadmin
+      - MINIO_SECRET_KEY=petpass123
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+      - elasticsearch
+      - minio
+    networks:
+      - pet-network
+    volumes:
+      - ./backend/services/marketplace-service:/app
+      - /app/node_modules
+
+  # Admin & Moderation Service
+  admin-service:
+    build:
+      context: ./backend/services/admin-service
+      dockerfile: Dockerfile
+    container_name: pet-admin-service
+    ports:
+      - "3007:3007"
+    environment:
+      - NODE_ENV=development
+      - PORT=3007
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=pet_platform
+      - DATABASE_USER=petadmin
+      - DATABASE_PASSWORD=petpass123
+      - MONGODB_URI=mongodb://petadmin:petpass123@mongodb:27017/pet_platform_chat?authSource=admin
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=petredis123
+      - RABBITMQ_URL=amqp://petadmin:petpass123@rabbitmq:5672
+      - ML_SERVICE_URL=http://ml-fraud-detection:8001
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+      - rabbitmq
+    networks:
+      - pet-network
+    volumes:
+      - ./backend/services/admin-service:/app
+      - /app/node_modules
+
+  # ML Recommender Service (Python FastAPI)
+  ml-recommender:
+    build:
+      context: ./ml-services/recommender
+      dockerfile: Dockerfile
+    container_name: pet-ml-recommender
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=pet_platform
+      - DATABASE_USER=petadmin
+      - DATABASE_PASSWORD=petpass123
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=petredis123
+      - MODEL_PATH=/models
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - pet-network
+    volumes:
+      - ./ml-services/recommender:/app
+      - ml_models:/models
+
+  # ML Fraud Detection Service (Python FastAPI)
+  ml-fraud-detection:
+    build:
+      context: ./ml-services/fraud-detection
+      dockerfile: Dockerfile
+    container_name: pet-ml-fraud-detection
+    ports:
+      - "8001:8001"
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=pet_platform
+      - DATABASE_USER=petadmin
+      - DATABASE_PASSWORD=petpass123
+      - MONGODB_URI=mongodb://petadmin:petpass123@mongodb:27017/pet_platform_chat?authSource=admin
+      - MODEL_PATH=/models
+    depends_on:
+      - postgres
+      - mongodb
+    networks:
+      - pet-network
+    volumes:
+      - ./ml-services/fraud-detection:/app
+      - ml_models:/models
+
+  # Next.js Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pet-platform-frontend
+    ports:
+      - "3100:3100"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://gateway:3000
+      - NEXT_PUBLIC_WS_URL=ws://gateway:3000
+    depends_on:
+      - gateway
+    networks:
+      - pet-network
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+
+networks:
+  pet-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mongo_data:
+  redis_data:
+  rabbitmq_data:
+  elasticsearch_data:
+  minio_data:
+  ml_models:
