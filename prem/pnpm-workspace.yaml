@@ -1,5 +1,8 @@
 packages:
-  - .
+    - .
+    - backend/gateway
+    - backend/services/*
+    - backend/shared
 ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
+    - sharp
+    - unrs-resolver

@@ -1,40 +1,35 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { HealthController } from './controllers/health.controller';
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { MongooseModule } from "@nestjs/mongoose";
+import { ClientsModule, Transport } from "@nestjs/microservices";
+import { HealthController } from "./controllers/health.controller";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath: ".env",
     }),
 
-    TypeOrmModule.forRootAsync({
+    MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        type: 'postgres',
-        host: config.get('DATABASE_HOST'),
-        port: config.get('DATABASE_PORT'),
-        username: config.get('DATABASE_USER'),
-        password: config.get('DATABASE_PASSWORD'),
-        database: config.get('DATABASE_NAME'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: config.get('NODE_ENV') === 'development',
-        logging: config.get('NODE_ENV') === 'development',
+        uri: config.get<string>(
+          "MONGODB_URI",
+          "mongodb://localhost:27017/pet_platform_chat",
+        ),
       }),
     }),
 
     ClientsModule.registerAsync([
       {
-        name: 'RABBITMQ_SERVICE',
+        name: "RABBITMQ_SERVICE",
         inject: [ConfigService],
         useFactory: (config: ConfigService) => ({
           transport: Transport.RMQ,
           options: {
-            urls: [config.get('RABBITMQ_URL')],
-            queue: 'main_queue',
+            urls: [config.get<string>("RABBITMQ_URL", "amqp://localhost:5672")],
+            queue: "main_queue",
             queueOptions: {
               durable: true,
             },

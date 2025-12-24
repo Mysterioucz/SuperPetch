@@ -1,15 +1,15 @@
-import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import * as helmet from 'helmet';
-import * as rateLimit from 'express-rate-limit';
-import { AppModule } from './app.module';
+import { NestFactory } from "@nestjs/core";
+import { ValidationPipe } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix("api/v1");
   app.use(helmet());
 
   // Rate limiting
@@ -17,12 +17,12 @@ async function bootstrap() {
     rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
       max: 100, // limit each IP to 100 requests per windowMs
-      message: 'Too many requests from this IP, please try again later.',
+      message: "Too many requests from this IP, please try again later.",
     }),
   );
 
   app.enableCors({
-    origin: configService.get('CORS_ORIGIN') || '*',
+    origin: configService.get("CORS_ORIGIN") || "*",
     credentials: true,
   });
 
@@ -34,7 +34,7 @@ async function bootstrap() {
     }),
   );
 
-  const port = configService.get('PORT') || 3000;
+  const port = configService.get("PORT") || 3000;
   await app.listen(port);
 
   console.log(`🌐 API Gateway running on http://localhost:${port}`);

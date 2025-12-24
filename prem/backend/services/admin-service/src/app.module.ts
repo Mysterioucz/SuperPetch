@@ -33,7 +33,7 @@ import { HealthController } from './controllers/health.controller';
         useFactory: (config: ConfigService) => ({
           transport: Transport.RMQ,
           options: {
-            urls: [config.get('RABBITMQ_URL')],
+            urls: [config.get<string>('RABBITMQ_URL', 'amqp://localhost:5672')],
             queue: 'main_queue',
             queueOptions: {
               durable: true,

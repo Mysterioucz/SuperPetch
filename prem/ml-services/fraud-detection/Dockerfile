@@ -2,10 +2,12 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+# Copy requirements and install dependencies
+COPY ml-services/fraud-detection/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Copy application files
+COPY ml-services/fraud-detection/ .
 
 EXPOSE 8001
 

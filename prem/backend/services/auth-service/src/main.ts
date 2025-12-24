@@ -1,17 +1,17 @@
-import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ConfigService } from '@nestjs/config';
-import * as helmet from 'helmet';
-import * as cookieParser from 'cookie-parser';
-import { AppModule } from './app.module';
+import { NestFactory } from "@nestjs/core";
+import { ValidationPipe } from "@nestjs/common";
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
+import { ConfigService } from "@nestjs/config";
+import helmet from "helmet";
+import * as cookieParser from "cookie-parser";
+import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
   // Global prefix
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix("api/v1");
 
   // Security middleware
   app.use(helmet());
@@ -19,10 +19,10 @@ async function bootstrap() {
 
   // CORS configuration
   app.enableCors({
-    origin: configService.get('CORS_ORIGIN') || '*',
+    origin: configService.get("CORS_ORIGIN") || "*",
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   });
 
   // Global validation pipe
@@ -39,19 +39,19 @@ async function bootstrap() {
 
   // Swagger documentation
   const config = new DocumentBuilder()
-    .setTitle('Pet Platform - Auth Service')
-    .setDescription('Authentication and Authorization API')
-    .setVersion('1.0')
+    .setTitle("Pet Platform - Auth Service")
+    .setDescription("Authentication and Authorization API")
+    .setVersion("1.0")
     .addBearerAuth()
-    .addTag('auth', 'Authentication endpoints')
-    .addTag('oauth', 'OAuth integration endpoints')
+    .addTag("auth", "Authentication endpoints")
+    .addTag("oauth", "OAuth integration endpoints")
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+  SwaggerModule.setup("api/docs", app, document);
 
   // Get port from environment
-  const port = configService.get('PORT') || 3001;
+  const port = configService.get("PORT") || 3001;
 
   await app.listen(port);
 
@@ -65,7 +65,7 @@ async function bootstrap() {
   ║   Docs:    http://localhost:${port}/api/docs            ║
   ║   Health:  http://localhost:${port}/api/v1/health       ║
   ║                                                       ║
-  ║   Environment: ${configService.get('NODE_ENV')}                       ║
+  ║   Environment: ${configService.get("NODE_ENV")}                       ║
   ║                                                       ║
   ╚═══════════════════════════════════════════════════════╝
   `);

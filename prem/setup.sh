@@ -53,7 +53,7 @@ else
 fi
 
 # Check Docker Compose
-if command_exists docker-compose || docker compose version >/dev/null 2>&1; then
+if command_exists docker compose || docker compose version >/dev/null 2>&1; then
     print_success "Docker Compose is available"
 else
     print_error "Docker Compose is not available"
@@ -128,12 +128,12 @@ case $choice in
 
         # Pull Docker images
         print_info "Pulling Docker images (this may take a while)..."
-        docker-compose pull
+        docker compose pull
         print_success "Docker images pulled"
 
         # Start services
         print_info "Starting all services..."
-        docker-compose up -d
+        docker compose up -d
 
         echo ""
         print_info "Waiting for services to be healthy..."
@@ -146,7 +146,7 @@ case $choice in
         services=("postgres:5432" "mongodb:27017" "redis:6379" "rabbitmq:5672" "elasticsearch:9200" "minio:9000")
         for service in "${services[@]}"; do
             IFS=':' read -r name port <<< "$service"
-            if docker-compose ps | grep -q "$name"; then
+            if docker compose ps | grep -q "$name"; then
                 print_success "$name is running"
             else
                 print_warning "$name may not be ready yet"
@@ -177,13 +177,13 @@ case $choice in
         echo ""
 
         # Start only backend infrastructure
-        docker-compose up -d postgres mongodb redis rabbitmq elasticsearch minio
+        docker compose up -d postgres mongodb redis rabbitmq elasticsearch minio
 
         print_info "Waiting for databases to be ready..."
         sleep 15
 
         # Start backend services
-        docker-compose up -d gateway auth-service user-service pet-service matching-service chat-service marketplace-service admin-service
+        docker compose up -d gateway auth-service user-service pet-service matching-service chat-service marketplace-service admin-service
 
         echo ""
         print_success "Backend services started!"
@@ -217,7 +217,7 @@ case $choice in
         echo ""
 
         # Start ML services
-        docker-compose up -d postgres redis ml-recommender ml-fraud-detection
+        docker compose up -d postgres redis ml-recommender ml-fraud-detection
 
         print_success "ML services started!"
         echo ""
@@ -270,7 +270,7 @@ case $choice in
         print_success "Development environment setup complete!"
         echo ""
         print_info "Next steps:"
-        echo "1. Start databases: docker-compose up -d postgres mongodb redis rabbitmq"
+        echo "1. Start databases: docker compose up -d postgres mongodb redis rabbitmq"
         echo "2. Start a service: cd backend/services/auth-service && pnpm run start:dev"
         echo "3. Start frontend: pnpm run dev"
         ;;
@@ -292,10 +292,10 @@ echo ""
 print_success "Setup completed successfully!"
 echo ""
 print_info "Useful commands:"
-echo "  View logs:           docker-compose logs -f [service-name]"
-echo "  Stop all services:   docker-compose down"
-echo "  Restart a service:   docker-compose restart [service-name]"
-echo "  View running:        docker-compose ps"
+echo "  View logs:           docker compose logs -f [service-name]"
+echo "  Stop all services:   docker compose down"
+echo "  Restart a service:   docker compose restart [service-name]"
+echo "  View running:        docker compose ps"
 echo ""
 print_info "Documentation: See PROJECT_README.md for detailed information"
 echo ""
