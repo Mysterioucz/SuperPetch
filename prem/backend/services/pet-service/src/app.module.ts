@@ -3,6 +3,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import { HealthController } from "./controllers/health.controller";
+import { PetController } from "./controllers/pet.controller";
+import { PetService } from "./services/pet.service";
+import { Pet } from "./entities/pet.entity";
 
 @Module({
   imports: [
@@ -26,6 +29,8 @@ import { HealthController } from "./controllers/health.controller";
       }),
     }),
 
+    TypeOrmModule.forFeature([Pet]),
+
     ClientsModule.registerAsync([
       {
         name: "RABBITMQ_SERVICE",
@@ -43,7 +48,7 @@ import { HealthController } from "./controllers/health.controller";
       },
     ]),
   ],
-  controllers: [HealthController],
-  providers: [],
+  controllers: [HealthController, PetController],
+  providers: [PetService],
 })
 export class AppModule {}
