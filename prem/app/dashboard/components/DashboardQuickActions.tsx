@@ -9,9 +9,9 @@ export default function DashboardQuickActions() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Link
           href="/adopt"
-          className="group relative flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-1 hover:shadow-md hover:ring-blue-200"
+          className="group relative flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-1 hover:shadow-md hover:ring-pink-200"
         >
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-2xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-pink-50 text-2xl text-pink-600 group-hover:bg-pink-600 group-hover:text-white transition-colors">
             🔍
           </div>
           <h3 className="font-semibold text-slate-900">Browse Pets</h3>
@@ -20,7 +20,7 @@ export default function DashboardQuickActions() {
 
         <Link
           href="/list-pet"
-          className="group relative flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-1 hover:shadow-md hover:ring-blue-200"
+          className="group relative flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-1 hover:shadow-md hover:ring-pink-200"
         >
           <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-purple-50 text-2xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
             ➕
@@ -31,7 +31,7 @@ export default function DashboardQuickActions() {
 
         <Link
           href="/marketplace"
-          className="group relative flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-1 hover:shadow-md hover:ring-blue-200"
+          className="group relative flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-1 hover:shadow-md hover:ring-pink-200"
         >
           <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-orange-50 text-2xl text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
             🛒
@@ -44,7 +44,7 @@ export default function DashboardQuickActions() {
 
         <Link
           href="/profile"
-          className="group relative flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-1 hover:shadow-md hover:ring-blue-200"
+          className="group relative flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-1 hover:shadow-md hover:ring-pink-200"
         >
           <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-50 text-2xl text-slate-600 group-hover:bg-slate-600 group-hover:text-white transition-colors">
             👤

@@ -22,7 +22,7 @@ export default function SafetyContent() {
           <li>Use our secure chat and payment systems.</li>
         </ul>
       </div>
-      <Link href="/" className="text-blue-600 hover:text-blue-500 font-medium">
+      <Link href="/" className="text-pink-600 hover:text-pink-500 font-medium">
         &larr; Back to Home
       </Link>
     </div>

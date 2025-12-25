@@ -4,7 +4,7 @@ export default function FeaturesSection() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Why Choose PetPlatform?
+            Why Choose Paw Home?
           </h2>
           <p className="mt-4 text-lg text-slate-600">
             We combine advanced technology with compassionate care to ensure the
@@ -14,8 +14,8 @@ export default function FeaturesSection() {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {/* Feature 1 */}
-          <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 transition-all hover:border-blue-200 hover:shadow-xl hover:shadow-blue-50">
-            <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-2xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+          <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 transition-all hover:border-pink-200 hover:shadow-xl hover:shadow-pink-50">
+            <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-pink-50 text-2xl text-pink-600 group-hover:bg-pink-600 group-hover:text-white transition-colors">
               🤖
             </div>
             <h3 className="mb-3 text-xl font-bold text-slate-900">
@@ -84,8 +84,8 @@ export default function FeaturesSection() {
           </div>
 
           {/* Feature 6 */}
-          <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 transition-all hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-50">
-            <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-2xl text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+          <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 transition-all hover:border-pink-200 hover:shadow-xl hover:shadow-pink-50">
+            <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-pink-50 text-2xl text-pink-600 group-hover:bg-pink-600 group-hover:text-white transition-colors">
               🏪
             </div>
             <h3 className="mb-3 text-xl font-bold text-slate-900">

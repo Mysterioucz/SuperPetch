@@ -19,7 +19,7 @@ export default function PetHeader({ pet }: PetHeaderProps) {
           </p>
         </div>
         <div className="text-right">
-          <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+          <span className="inline-flex items-center rounded-full bg-pink-50 px-3 py-1 text-sm font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
             {pet.status}
           </span>
           {pet.adoptionFee > 0 ? (

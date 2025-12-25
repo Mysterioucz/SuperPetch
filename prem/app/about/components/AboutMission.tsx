@@ -12,14 +12,14 @@ export default function AboutMission() {
             perfect pet match should be easy, transparent, and safe.
           </p>
           <p className="text-gray-700 text-lg leading-relaxed">
-            PetPlatform was founded to bridge the gap between pets in need and
+            Paw Home was founded to bridge the gap between pets in need and
             families ready to adopt, using technology to make the process
             seamless and trustworthy for everyone involved.
           </p>
         </div>
-        <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl p-12 text-center">
+        <div className="bg-gradient-to-br from-pink-100 to-pink-50 rounded-2xl p-12 text-center">
           <div className="text-6xl mb-4">🏠</div>
-          <div className="text-4xl font-bold text-blue-600 mb-2">10,000+</div>
+          <div className="text-4xl font-bold text-pink-600 mb-2">10,000+</div>
           <p className="text-gray-700 text-lg">Pets Found Homes</p>
         </div>
       </div>

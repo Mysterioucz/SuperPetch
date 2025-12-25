@@ -53,7 +53,7 @@ export default function ListPetStep2({
               description: e.target.value,
             })
           }
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
           placeholder="Tell us about this pet's personality, habits, and what makes them special..."
         />
       </div>
@@ -72,7 +72,7 @@ export default function ListPetStep2({
                 type="checkbox"
                 checked={formData.temperament.includes(trait)}
                 onChange={() => handleTemperamentToggle(trait)}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
               />
               <span className="text-sm text-gray-700">{trait}</span>
             </label>
@@ -91,7 +91,7 @@ export default function ListPetStep2({
                 vaccinated: e.target.checked,
               })
             }
-            className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            className="w-5 h-5 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
           />
           <span className="text-sm font-medium text-gray-700">Vaccinated</span>
         </label>
@@ -106,7 +106,7 @@ export default function ListPetStep2({
                 neutered: e.target.checked,
               })
             }
-            className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            className="w-5 h-5 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
           />
           <span className="text-sm font-medium text-gray-700">
             Spayed/Neutered
@@ -123,7 +123,7 @@ export default function ListPetStep2({
                 microchipped: e.target.checked,
               })
             }
-            className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            className="w-5 h-5 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
           />
           <span className="text-sm font-medium text-gray-700">
             Microchipped
@@ -144,7 +144,7 @@ export default function ListPetStep2({
               healthStatus: e.target.value,
             })
           }
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
           placeholder="Any health conditions, medications, or special care requirements..."
         />
       </div>
@@ -162,7 +162,7 @@ export default function ListPetStep2({
               specialNeeds: e.target.value,
             })
           }
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
           placeholder="Any special needs or requirements..."
         />
       </div>
@@ -178,7 +178,7 @@ export default function ListPetStep2({
         <button
           type="button"
           onClick={nextStep}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+          className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-semibold"
         >
           Next Step →
         </button>

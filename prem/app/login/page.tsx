@@ -14,8 +14,8 @@ export default function LoginPage() {
             className="inline-flex items-center gap-2 mb-6 hover:opacity-80 transition-opacity"
           >
             <span className="text-4xl">🐾</span>
-            <span className="text-2xl font-bold text-blue-600 tracking-tight">
-              PetPlatform
+            <span className="text-2xl font-bold text-pink-600 tracking-tight">
+              Paw Home
             </span>
           </Link>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
@@ -34,7 +34,7 @@ export default function LoginPage() {
             Don't have an account?{" "}
             <Link
               href="/register"
-              className="font-semibold text-blue-600 hover:text-blue-500 transition-colors"
+              className="font-semibold text-pink-600 hover:text-pink-500 transition-colors"
             >
               Sign up for free
             </Link>

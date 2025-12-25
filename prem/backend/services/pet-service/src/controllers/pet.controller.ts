@@ -6,10 +6,12 @@ import {
   UploadedFiles,
   Get,
   Param,
+  Query,
 } from "@nestjs/common";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { PetService } from "../services/pet.service";
 import { CreatePetDto } from "../dto/create-pet.dto";
+import { GetPetsFilterDto } from "../dto/get-pets-filter.dto";
 
 @Controller("pets")
 export class PetController {
@@ -25,8 +27,8 @@ export class PetController {
   }
 
   @Get()
-  findAll() {
-    return this.petService.findAll();
+  findAll(@Query() filterDto: GetPetsFilterDto) {
+    return this.petService.findAll(filterDto);
   }
 
   @Get(":id")

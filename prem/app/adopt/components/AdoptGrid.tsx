@@ -1,6 +1,7 @@
 import { Pet } from "../types";
 import AdoptPetCard from "./AdoptPetCard";
 import AdoptEmptyState from "./AdoptEmptyState";
+import Select from "../../components/ui/Select";
 
 interface AdoptGridProps {
   pets: Pet[];
@@ -16,7 +17,7 @@ export default function AdoptGrid({
   if (loading) {
     return (
       <div className="flex justify-center items-center py-32">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-pink-600 border-t-transparent"></div>
       </div>
     );
   }
@@ -34,12 +35,16 @@ export default function AdoptGrid({
             ({pets.length})
           </span>
         </h2>
-        <select className="block w-full sm:w-auto rounded-lg border-0 py-2 pl-3 pr-10 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
-          <option>Sort by: Newest</option>
-          <option>Sort by: Oldest</option>
-          <option>Sort by: Name A-Z</option>
-          <option>Sort by: Age</option>
-        </select>
+        <div className="w-full sm:w-auto min-w-[200px]">
+          <Select
+            options={[
+              { value: "newest", label: "Sort by: Newest" },
+              { value: "oldest", label: "Sort by: Oldest" },
+              { value: "name_asc", label: "Sort by: Name A-Z" },
+              { value: "age", label: "Sort by: Age" },
+            ]}
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

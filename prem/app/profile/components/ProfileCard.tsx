@@ -73,7 +73,7 @@ export default function ProfileCard({ user, onLogout }: ProfileCardProps) {
       <div className="mt-6 flex justify-center">
         <Link
           href="/dashboard"
-          className="text-blue-600 hover:text-blue-500 font-medium"
+          className="text-pink-600 hover:text-pink-500 font-medium"
         >
           &larr; Back to Dashboard
         </Link>

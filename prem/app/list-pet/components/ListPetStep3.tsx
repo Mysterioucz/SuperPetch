@@ -28,7 +28,7 @@ export default function ListPetStep3({
 
     // Cleanup
     return () => {
-      newPreviews.forEach((url) => URL.revokeObjectURL(url));
+      newPreviews.forEach((url: string) => URL.revokeObjectURL(url));
     };
   }, [formData.images]);
 
@@ -159,7 +159,7 @@ export default function ListPetStep3({
           ))}
         </div>
 
-        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-500 transition">
+        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-pink-500 transition">
           <div className="space-y-1 text-center">
             <svg
               className="mx-auto h-12 w-12 text-gray-400"
@@ -175,7 +175,7 @@ export default function ListPetStep3({
               />
             </svg>
             <div className="flex text-sm text-gray-600 justify-center">
-              <label className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500">
+              <label className="relative cursor-pointer bg-white rounded-md font-medium text-pink-600 hover:text-pink-500">
                 <span>Upload photos</span>
                 <input
                   type="file"
@@ -194,11 +194,11 @@ export default function ListPetStep3({
         </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h3 className="text-sm font-semibold text-blue-900 mb-2">
+      <div className="bg-pink-50 border border-pink-200 rounded-lg p-4">
+        <h3 className="text-sm font-semibold text-pink-900 mb-2">
           📸 Photo Tips
         </h3>
-        <ul className="text-sm text-blue-800 space-y-1">
+        <ul className="text-sm text-pink-800 space-y-1">
           <li>• Use good lighting and clear focus</li>
           <li>• Show different angles of your pet</li>
           <li>• Include close-ups of their face</li>
@@ -218,7 +218,7 @@ export default function ListPetStep3({
           type="submit"
           onClick={handleSubmit}
           disabled={loading}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold disabled:bg-blue-300 disabled:cursor-not-allowed"
+          className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-semibold disabled:bg-pink-300 disabled:cursor-not-allowed"
         >
           {loading ? "Submitting..." : "List Pet for Adoption"}
         </button>

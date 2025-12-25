@@ -9,7 +9,7 @@ export default function DashboardStats() {
               0
             </p>
           </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-2xl text-blue-600">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-50 text-2xl text-pink-600">
             🐕
           </div>
         </div>

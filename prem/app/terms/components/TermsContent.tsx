@@ -9,7 +9,7 @@ export default function TermsContent() {
           className="inline-flex items-center space-x-2 mb-6 hover:opacity-80 transition"
         >
           <span className="text-3xl">🐾</span>
-          <span className="text-xl font-bold text-blue-600">PetPlatform</span>
+          <span className="text-xl font-bold text-pink-600">Paw Home</span>
         </Link>
         <h1 className="text-4xl font-bold text-gray-900 mt-4">
           Terms and Conditions
@@ -25,7 +25,7 @@ export default function TermsContent() {
             1. Agreement to Terms
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            By accessing and using PetPlatform, you accept and agree to be bound
+            By accessing and using Paw Home, you accept and agree to be bound
             by the terms and provisions of this agreement. If you do not agree
             to these terms, please do not use our platform.
           </p>
@@ -37,7 +37,7 @@ export default function TermsContent() {
           </h2>
           <p className="text-gray-700 leading-relaxed mb-3">
             Permission is granted to temporarily access the materials on
-            PetPlatform for personal, non-commercial transitory viewing only.
+            Paw Home for personal, non-commercial transitory viewing only.
             This is the grant of a license, not a transfer of title, and under
             this license you may not:
           </p>
@@ -104,7 +104,7 @@ export default function TermsContent() {
             5. Prohibited Activities
           </h2>
           <p className="text-gray-700 leading-relaxed mb-3">
-            You may not use PetPlatform to:
+            You may not use Paw Home to:
           </p>
           <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
             <li>Engage in any unlawful or fraudulent activity</li>
@@ -122,7 +122,7 @@ export default function TermsContent() {
             6. Content Ownership
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            You retain all rights to the content you post on PetPlatform.
+            You retain all rights to the content you post on Paw Home.
             However, by posting content, you grant us a worldwide,
             non-exclusive, royalty-free license to use, reproduce, modify, and
             display your content in connection with operating and promoting the
@@ -135,7 +135,7 @@ export default function TermsContent() {
             7. Payment Terms
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            Certain features of PetPlatform may require payment. You agree to
+            Certain features of Paw Home may require payment. You agree to
             provide accurate billing information and authorize us to charge your
             payment method. All fees are non-refundable unless otherwise stated.
           </p>
@@ -146,7 +146,7 @@ export default function TermsContent() {
             8. Disclaimer of Warranties
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            PetPlatform is provided "as is" without warranties of any kind,
+            Paw Home is provided "as is" without warranties of any kind,
             either express or implied. We do not guarantee that the platform
             will be uninterrupted, secure, or error-free. We are not responsible
             for the accuracy of user-generated content or the conduct of users.
@@ -158,7 +158,7 @@ export default function TermsContent() {
             9. Limitation of Liability
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            In no event shall PetPlatform or its suppliers be liable for any
+            In no event shall Paw Home or its suppliers be liable for any
             damages arising out of the use or inability to use our platform.
             This includes damages related to pet adoptions, transactions between
             users, or any other user interactions.
@@ -170,7 +170,7 @@ export default function TermsContent() {
             10. Indemnification
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            You agree to indemnify and hold PetPlatform harmless from any
+            You agree to indemnify and hold Paw Home harmless from any
             claims, losses, damages, liabilities, and expenses arising from your
             use of the platform, violation of these terms, or infringement of
             any rights of another party.
@@ -194,7 +194,7 @@ export default function TermsContent() {
           </h2>
           <p className="text-gray-700 leading-relaxed">
             These terms shall be governed by and construed in accordance with
-            the laws of the jurisdiction in which PetPlatform operates, without
+            the laws of the jurisdiction in which Paw Home operates, without
             regard to its conflict of law provisions.
           </p>
         </section>
@@ -219,9 +219,9 @@ export default function TermsContent() {
           <p className="text-gray-700 leading-relaxed">
             If you have any questions about these terms, please contact us:
           </p>
-          <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+          <div className="mt-4 p-4 bg-pink-50 rounded-lg">
             <p className="text-gray-700">
-              <strong>Email:</strong> legal@petplatform.com
+              <strong>Email:</strong> legal@pawhome.com
               <br />
               <strong>Address:</strong> 123 Pet Street, Animal City, PC 12345
               <br />
@@ -234,7 +234,7 @@ export default function TermsContent() {
       <div className="mt-8 text-center">
         <Link
           href="/"
-          className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+          className="inline-block px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-semibold"
         >
           Back to Home
         </Link>

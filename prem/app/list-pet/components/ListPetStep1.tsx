@@ -167,7 +167,7 @@ export default function ListPetStep1({
         <button
           type="button"
           onClick={nextStep}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+          className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-semibold"
         >
           Next Step →
         </button>

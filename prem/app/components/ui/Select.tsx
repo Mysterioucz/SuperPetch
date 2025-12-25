@@ -19,7 +19,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         <div className="relative">
           <select
             ref={ref}
-            className={`w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors bg-white ${
+            className={`w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-colors bg-white ${
               error ? "border-red-500 focus:ring-red-500" : ""
             } ${className}`}
             {...props}

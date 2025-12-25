@@ -55,7 +55,7 @@ export default function PetDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600"></div>
       </div>
     );
   }
@@ -72,7 +72,7 @@ export default function PetDetailPage() {
           </p>
           <Link
             href="/adopt"
-            className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-all"
+            className="inline-flex items-center justify-center rounded-full bg-pink-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 transition-all"
           >
             Browse other pets
           </Link>
@@ -86,11 +86,11 @@ export default function PetDetailPage() {
       <main className="container mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="flex mb-8 text-sm text-slate-500">
-          <Link href="/" className="hover:text-blue-600">
+          <Link href="/" className="hover:text-pink-600">
             Home
           </Link>
           <span className="mx-2">/</span>
-          <Link href="/adopt" className="hover:text-blue-600">
+          <Link href="/adopt" className="hover:text-pink-600">
             Adopt
           </Link>
           <span className="mx-2">/</span>

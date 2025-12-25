@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Pet } from "../types";
 
@@ -7,9 +8,16 @@ interface AdoptPetCardProps {
 
 export default function AdoptPetCard({ pet }: AdoptPetCardProps) {
   const router = useRouter();
+  const [imageError, setImageError] = useState(false);
 
   const handlePetClick = () => {
     router.push(`/pets/${pet.id}`);
+  };
+
+  const getImageUrl = (image: string) => {
+    if (!image) return "";
+    if (image.startsWith("http") || image.startsWith("/")) return image;
+    return `https://placehold.co/600x400?text=${encodeURIComponent(pet.name)}`;
   };
 
   return (
@@ -18,11 +26,12 @@ export default function AdoptPetCard({ pet }: AdoptPetCardProps) {
       className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-        {pet.images && pet.images.length > 0 ? (
+        {pet.images && pet.images.length > 0 && !imageError ? (
           <img
-            src={pet.images[0]}
+            src={getImageUrl(pet.images[0])}
             alt={pet.name}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            onError={() => setImageError(true)}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-6xl text-slate-300">
@@ -58,7 +67,7 @@ export default function AdoptPetCard({ pet }: AdoptPetCardProps) {
 
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+          <h3 className="text-lg font-bold text-slate-900 group-hover:text-pink-600 transition-colors">
             {pet.name}
           </h3>
           <span className="text-sm font-medium text-slate-500">
@@ -110,7 +119,7 @@ export default function AdoptPetCard({ pet }: AdoptPetCardProps) {
             </span>
           )}
           {pet.neutered && (
-            <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+            <span className="inline-flex items-center rounded-full bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
               Neutered
             </span>
           )}

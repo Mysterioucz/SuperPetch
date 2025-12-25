@@ -10,13 +10,13 @@ export default function ForgotPasswordSuccess({
   onRetry,
 }: ForgotPasswordSuccessProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white flex items-center justify-center px-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center space-x-2 mb-4">
             <span className="text-4xl">🐾</span>
-            <span className="text-2xl font-bold text-blue-600">
-              PetPlatform
+            <span className="text-2xl font-bold text-pink-600">
+              Paw Home
             </span>
           </Link>
         </div>
@@ -35,14 +35,14 @@ export default function ForgotPasswordSuccess({
             Didn't receive the email? Check your spam folder or{" "}
             <button
               onClick={onRetry}
-              className="text-blue-600 hover:text-blue-700 font-semibold"
+              className="text-pink-600 hover:text-pink-700 font-semibold"
             >
               try again
             </button>
           </p>
           <Link
             href="/login"
-            className="inline-block w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+            className="inline-block w-full py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-semibold"
           >
             Back to Login
           </Link>

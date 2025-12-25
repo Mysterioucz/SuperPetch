@@ -9,7 +9,7 @@ export default function PrivacyContent() {
           className="inline-flex items-center space-x-2 mb-6 hover:opacity-80 transition"
         >
           <span className="text-3xl">🐾</span>
-          <span className="text-xl font-bold text-blue-600">PetPlatform</span>
+          <span className="text-xl font-bold text-pink-600">Paw Home</span>
         </Link>
         <h1 className="text-4xl font-bold text-gray-900 mt-4">
           Privacy Policy
@@ -25,7 +25,7 @@ export default function PrivacyContent() {
             1. Introduction
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            Welcome to PetPlatform. We respect your privacy and are committed to
+            Welcome to Paw Home. We respect your privacy and are committed to
             protecting your personal data. This privacy policy will inform you
             about how we look after your personal data when you visit our
             platform and tell you about your privacy rights and how the law
@@ -171,9 +171,9 @@ export default function PrivacyContent() {
             If you have any questions about this privacy policy or our privacy
             practices, please contact us at:
           </p>
-          <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+          <div className="mt-4 p-4 bg-pink-50 rounded-lg">
             <p className="text-gray-700">
-              <strong>Email:</strong> privacy@petplatform.com
+              <strong>Email:</strong> privacy@pawhome.com
               <br />
               <strong>Address:</strong> 123 Pet Street, Animal City, PC 12345
             </p>
@@ -184,7 +184,7 @@ export default function PrivacyContent() {
       <div className="mt-8 text-center">
         <Link
           href="/"
-          className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+          className="inline-block px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-semibold"
         >
           Back to Home
         </Link>

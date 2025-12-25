@@ -9,13 +9,13 @@ export default function HeroSection() {
 
       <div className="container mx-auto px-4 md:px-6 text-center">
         <div className="mx-auto max-w-3xl space-y-6">
-          <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-sm font-medium text-blue-800 mb-4">
-            <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2"></span>
+          <div className="inline-flex items-center rounded-full border border-pink-200 bg-pink-50 px-3 py-1 text-sm font-medium text-pink-800 mb-4">
+            <span className="flex h-2 w-2 rounded-full bg-pink-600 mr-2"></span>
             Now available in your city
           </div>
           <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl text-balance">
             Find Your Perfect <br className="hidden sm:block" />
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-pink-600 to-pink-600 bg-clip-text text-transparent">
               Pet Match
             </span>
           </h1>
@@ -26,7 +26,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Link
               href="/adopt"
-              className="h-12 px-8 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-500 transition-all hover:shadow-lg hover:shadow-blue-200 flex items-center justify-center w-full sm:w-auto"
+              className="h-12 px-8 rounded-full bg-pink-600 text-white font-semibold hover:bg-pink-500 transition-all hover:shadow-lg hover:shadow-pink-200 flex items-center justify-center w-full sm:w-auto"
             >
               Start Adopting
             </Link>

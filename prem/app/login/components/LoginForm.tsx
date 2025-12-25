@@ -113,7 +113,7 @@ export default function LoginForm() {
               id="remember-me"
               name="remember-me"
               type="checkbox"
-              className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600"
+              className="h-4 w-4 rounded border-slate-300 text-pink-600 focus:ring-pink-600"
             />
             <label
               htmlFor="remember-me"
@@ -126,7 +126,7 @@ export default function LoginForm() {
           <div className="text-sm">
             <Link
               href="/forgot-password"
-              className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
+              className="font-medium text-pink-600 hover:text-pink-500 transition-colors"
             >
               Forgot password?
             </Link>
@@ -137,7 +137,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full justify-center rounded-full bg-blue-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-70 disabled:cursor-not-allowed transition-all hover:shadow-lg hover:shadow-blue-200"
+            className="flex w-full justify-center rounded-full bg-pink-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600 disabled:opacity-70 disabled:cursor-not-allowed transition-all hover:shadow-lg hover:shadow-pink-200"
           >
             {loading ? (
               <span className="flex items-center gap-2">

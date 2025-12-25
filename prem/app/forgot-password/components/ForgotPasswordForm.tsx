@@ -16,13 +16,13 @@ export default function ForgotPasswordForm({
   error,
 }: ForgotPasswordFormProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white flex items-center justify-center px-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center space-x-2 mb-4">
             <span className="text-4xl">🐾</span>
-            <span className="text-2xl font-bold text-blue-600">
-              PetPlatform
+            <span className="text-2xl font-bold text-pink-600">
+              Paw Home
             </span>
           </Link>
           <h1 className="text-3xl font-bold text-gray-900 mt-4">
@@ -55,7 +55,7 @@ export default function ForgotPasswordForm({
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition"
                 placeholder="you@example.com"
               />
             </div>
@@ -63,7 +63,7 @@ export default function ForgotPasswordForm({
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold disabled:bg-blue-300 disabled:cursor-not-allowed"
+              className="w-full py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-semibold disabled:bg-pink-300 disabled:cursor-not-allowed"
             >
               {loading ? "Sending..." : "Send Reset Instructions"}
             </button>
@@ -74,7 +74,7 @@ export default function ForgotPasswordForm({
               Remember your password?{" "}
               <Link
                 href="/login"
-                className="text-blue-600 hover:text-blue-700 font-semibold"
+                className="text-pink-600 hover:text-pink-700 font-semibold"
               >
                 Sign in
               </Link>
@@ -86,7 +86,7 @@ export default function ForgotPasswordForm({
               Need help?{" "}
               <Link
                 href="/contact"
-                className="text-blue-600 hover:text-blue-700"
+                className="text-pink-600 hover:text-pink-700"
               >
                 Contact Support
               </Link>

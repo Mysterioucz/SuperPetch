@@ -13,7 +13,7 @@ export default function HowItWorksSection() {
 
         <div className="grid gap-12 md:grid-cols-3">
           <div className="relative flex flex-col items-center text-center">
-            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-2xl font-bold text-white shadow-lg shadow-blue-200">
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-pink-600 text-2xl font-bold text-white shadow-lg shadow-pink-200">
               1
             </div>
             <h3 className="mb-3 text-xl font-bold text-slate-900">
@@ -25,7 +25,7 @@ export default function HowItWorksSection() {
             </p>
           </div>
           <div className="relative flex flex-col items-center text-center">
-            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-2xl font-bold text-white shadow-lg shadow-blue-200">
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-pink-600 text-2xl font-bold text-white shadow-lg shadow-pink-200">
               2
             </div>
             <h3 className="mb-3 text-xl font-bold text-slate-900">
@@ -37,7 +37,7 @@ export default function HowItWorksSection() {
             </p>
           </div>
           <div className="relative flex flex-col items-center text-center">
-            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-2xl font-bold text-white shadow-lg shadow-blue-200">
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-pink-600 text-2xl font-bold text-white shadow-lg shadow-pink-200">
               3
             </div>
             <h3 className="mb-3 text-xl font-bold text-slate-900">
