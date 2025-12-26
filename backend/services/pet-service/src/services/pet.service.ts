@@ -13,8 +13,13 @@ export class PetService {
   ) {}
 
   async create(createPetDto: CreatePetDto, files: Array<any>): Promise<Pet> {
-    const { temperament, vaccinated, neutered, microchipped, ...petData } =
-      createPetDto;
+    const {
+      temperament,
+      vaccinated,
+      spayedNeutered,
+      microchipped,
+      ...petData
+    } = createPetDto;
 
     // Parse temperament if it's a JSON string
     let parsedTemperament: string[] = [];
@@ -40,9 +45,9 @@ export class PetService {
     const pet = this.petRepository.create({
       ...petData,
       temperament: parsedTemperament,
-      images: imageUrls,
+      photos: imageUrls,
       vaccinated,
-      neutered,
+      spayedNeutered,
       microchipped,
       // ownerId: user.id // TODO: Extract user from request
     });
@@ -51,11 +56,11 @@ export class PetService {
   }
 
   async findAll(filterDto: GetPetsFilterDto): Promise<Pet[]> {
-    const { species, breed, size, age, location, search, sort } = filterDto;
+    const { petType, breed, size, age, location, search, sort } = filterDto;
     const query = this.petRepository.createQueryBuilder("pet");
 
-    if (species && species !== "all") {
-      query.andWhere("pet.species = :species", { species });
+    if (petType && petType !== "all") {
+      query.andWhere("pet.petType = :petType", { petType });
     }
 
     if (breed) {
@@ -68,19 +73,19 @@ export class PetService {
 
     if (age && age !== "all") {
       if (age === "baby") {
-        query.andWhere("pet.age < 1");
+        query.andWhere("pet.ageYears < 1");
       } else if (age === "young") {
-        query.andWhere("pet.age >= 1 AND pet.age < 3");
+        query.andWhere("pet.ageYears >= 1 AND pet.ageYears < 3");
       } else if (age === "adult") {
-        query.andWhere("pet.age >= 3 AND pet.age < 8");
+        query.andWhere("pet.ageYears >= 3 AND pet.ageYears < 8");
       } else if (age === "senior") {
-        query.andWhere("pet.age >= 8");
+        query.andWhere("pet.ageYears >= 8");
       }
     }
 
     if (location) {
       query.andWhere(
-        "(pet.city ILIKE :location OR pet.state ILIKE :location)",
+        "(pet.city ILIKE :location OR pet.country ILIKE :location)",
         { location: `%${location}%` },
       );
     }

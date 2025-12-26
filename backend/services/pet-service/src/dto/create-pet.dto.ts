@@ -6,14 +6,20 @@ export class CreatePetDto {
   name: string;
 
   @IsString()
-  species: string;
+  petType: string;
 
   @IsString()
   breed: string;
 
+  @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  age: number;
+  ageYears?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  ageMonths?: number;
 
   @IsString()
   gender: string;
@@ -24,7 +30,7 @@ export class CreatePetDto {
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  weight?: number;
+  weightKg?: number;
 
   @IsOptional()
   @IsString()
@@ -75,7 +81,7 @@ export class CreatePetDto {
       return false;
     return undefined;
   })
-  neutered?: boolean;
+  spayedNeutered?: boolean;
 
   @IsOptional()
   @IsBoolean()
@@ -96,17 +102,34 @@ export class CreatePetDto {
   microchipped?: boolean;
 
   @IsOptional()
-  @IsString()
-  specialNeeds?: string;
+  @IsBoolean()
+  @Transform(({ value }) => {
+    if (value === undefined || value === null || value === "") return undefined;
+    if (
+      value === "true" ||
+      value === true ||
+      value === "1" ||
+      value === 1 ||
+      value === "on"
+    )
+      return true;
+    if (value === "false" || value === false || value === "0" || value === 0)
+      return false;
+    return undefined;
+  })
+  hasSpecialNeeds?: boolean;
 
+  @IsOptional()
   @IsString()
-  city: string;
+  specialNeedsDescription?: string;
 
+  @IsOptional()
   @IsString()
-  state: string;
+  city?: string;
 
+  @IsOptional()
   @IsString()
-  zipCode: string;
+  country?: string;
 
   @IsOptional()
   @IsNumber()

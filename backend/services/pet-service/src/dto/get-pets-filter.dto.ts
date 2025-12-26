@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 export class GetPetsFilterDto {
   @IsOptional()
   @IsString()
-  species?: string;
+  petType?: string;
 
   @IsOptional()
   @IsString()
