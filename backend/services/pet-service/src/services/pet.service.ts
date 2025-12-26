@@ -47,6 +47,11 @@ export class PetService {
         )
       : [];
 
+    // Use provided ownerId or generate a mock UUID for testing
+    // TODO: Extract ownerId from JWT token in request
+    const ownerId =
+      createPetDto.ownerId || "00000000-0000-0000-0000-000000000000";
+
     const pet = this.petRepository.create({
       ...petData,
       species,
@@ -56,7 +61,7 @@ export class PetService {
       vaccinated,
       spayedNeutered,
       microchipped,
-      // ownerId: user.id // TODO: Extract user from request
+      ownerId,
     });
 
     return this.petRepository.save(pet);

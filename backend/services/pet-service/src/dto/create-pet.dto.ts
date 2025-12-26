@@ -12,6 +12,10 @@ export class CreatePetDto {
   @IsString()
   petType?: string; // Generated from species (lowercase)
 
+  @IsOptional()
+  @IsString()
+  ownerId?: string; // User ID - will be extracted from JWT in future
+
   @IsString()
   breed: string;
 
