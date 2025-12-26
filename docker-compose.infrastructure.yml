@@ -6,7 +6,7 @@ services:
         environment:
             POSTGRES_USER: petadmin
             POSTGRES_PASSWORD: petpass123
-            POSTGRES_DB: pet_platform
+            POSTGRES_DB: pawhome
         ports:
             - "5432:5432"
         volumes:
@@ -27,7 +27,7 @@ services:
         environment:
             MONGO_INITDB_ROOT_USERNAME: petadmin
             MONGO_INITDB_ROOT_PASSWORD: petpass123
-            MONGO_INITDB_DATABASE: pet_platform_chat
+            MONGO_INITDB_DATABASE: pawhome_chat
         ports:
             - "27019:27017"
         volumes:

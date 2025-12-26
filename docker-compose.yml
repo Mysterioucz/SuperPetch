@@ -6,7 +6,7 @@ services:
         environment:
             POSTGRES_USER: petadmin
             POSTGRES_PASSWORD: petpass123
-            POSTGRES_DB: pet_platform
+            POSTGRES_DB: pawhome
         ports:
             - "5432:5432"
         volumes:
@@ -15,7 +15,7 @@ services:
         networks:
             - pet-network
         healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U petadmin -d pet_platform"]
+            test: ["CMD-SHELL", "pg_isready -U petadmin -d pawhome"]
             interval: 10s
             timeout: 5s
             retries: 5
@@ -27,7 +27,7 @@ services:
         environment:
             MONGO_INITDB_ROOT_USERNAME: petadmin
             MONGO_INITDB_ROOT_PASSWORD: petpass123
-            MONGO_INITDB_DATABASE: pet_platform_chat
+            MONGO_INITDB_DATABASE: pawhome_chat
         ports:
             - "27019:27017"
         volumes:
@@ -165,7 +165,7 @@ services:
             - PORT=3001
             - DATABASE_HOST=postgres
             - DATABASE_PORT=5432
-            - DATABASE_NAME=pet_platform
+            - DATABASE_NAME=pawhome
             - DATABASE_USER=petadmin
             - DATABASE_PASSWORD=petpass123
             - REDIS_HOST=redis
@@ -194,7 +194,7 @@ services:
             - PORT=3002
             - DATABASE_HOST=postgres
             - DATABASE_PORT=5432
-            - DATABASE_NAME=pet_platform
+            - DATABASE_NAME=pawhome
             - DATABASE_USER=petadmin
             - DATABASE_PASSWORD=petpass123
             - REDIS_HOST=redis
@@ -226,7 +226,7 @@ services:
             - PORT=3003
             - DATABASE_HOST=postgres
             - DATABASE_PORT=5432
-            - DATABASE_NAME=pet_platform
+            - DATABASE_NAME=pawhome
             - DATABASE_USER=petadmin
             - DATABASE_PASSWORD=petpass123
             - REDIS_HOST=redis
@@ -261,7 +261,7 @@ services:
             - PORT=3004
             - DATABASE_HOST=postgres
             - DATABASE_PORT=5432
-            - DATABASE_NAME=pet_platform
+            - DATABASE_NAME=pawhome
             - DATABASE_USER=petadmin
             - DATABASE_PASSWORD=petpass123
             - REDIS_HOST=redis
@@ -287,7 +287,7 @@ services:
         environment:
             - NODE_ENV=development
             - PORT=3005
-            - MONGODB_URI=mongodb://petadmin:petpass123@mongodb:27017/pet_platform_chat?authSource=admin
+            - MONGODB_URI=mongodb://petadmin:petpass123@mongodb:27017/pawhome_chat?authSource=admin
             - REDIS_HOST=redis
             - REDIS_PORT=6379
             - REDIS_PASSWORD=petredis123
@@ -317,7 +317,7 @@ services:
             - PORT=3006
             - DATABASE_HOST=postgres
             - DATABASE_PORT=5432
-            - DATABASE_NAME=pet_platform
+            - DATABASE_NAME=pawhome
             - DATABASE_USER=petadmin
             - DATABASE_PASSWORD=petpass123
             - REDIS_HOST=redis
@@ -351,10 +351,10 @@ services:
             - PORT=3007
             - DATABASE_HOST=postgres
             - DATABASE_PORT=5432
-            - DATABASE_NAME=pet_platform
+            - DATABASE_NAME=pawhome
             - DATABASE_USER=petadmin
             - DATABASE_PASSWORD=petpass123
-            - MONGODB_URI=mongodb://petadmin:petpass123@mongodb:27017/pet_platform_chat?authSource=admin
+            - MONGODB_URI=mongodb://petadmin:petpass123@mongodb:27017/pawhome_chat?authSource=admin
             - REDIS_HOST=redis
             - REDIS_PORT=6379
             - REDIS_PASSWORD=petredis123
@@ -380,7 +380,7 @@ services:
             - ENVIRONMENT=development
             - DATABASE_HOST=postgres
             - DATABASE_PORT=5432
-            - DATABASE_NAME=pet_platform
+            - DATABASE_NAME=pawhome
             - DATABASE_USER=petadmin
             - DATABASE_PASSWORD=petpass123
             - REDIS_HOST=redis
@@ -408,10 +408,10 @@ services:
             - ENVIRONMENT=development
             - DATABASE_HOST=postgres
             - DATABASE_PORT=5432
-            - DATABASE_NAME=pet_platform
+            - DATABASE_NAME=pawhome
             - DATABASE_USER=petadmin
             - DATABASE_PASSWORD=petpass123
-            - MONGODB_URI=mongodb://petadmin:petpass123@mongodb:27017/pet_platform_chat?authSource=admin
+            - MONGODB_URI=mongodb://petadmin:petpass123@mongodb:27017/pawhome_chat?authSource=admin
             - MODEL_PATH=/models
         depends_on:
             - postgres

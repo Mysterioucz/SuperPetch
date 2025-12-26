@@ -6,21 +6,95 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 -- ENUMS
 -- ============================================
 
-CREATE TYPE user_role AS ENUM ('user', 'business', 'admin', 'moderator');
-CREATE TYPE verification_status AS ENUM ('pending', 'verified', 'rejected');
-CREATE TYPE pet_status AS ENUM ('available', 'pending', 'adopted', 'breeding', 'hidden', 'deceased');
-CREATE TYPE pet_type AS ENUM ('dog', 'cat', 'bird', 'rabbit', 'hamster', 'other');
-CREATE TYPE gender AS ENUM ('male', 'female', 'unknown');
-CREATE TYPE energy_level AS ENUM ('low', 'medium', 'high', 'very_high');
-CREATE TYPE size AS ENUM ('tiny', 'small', 'medium', 'large', 'giant');
-CREATE TYPE home_type AS ENUM ('apartment', 'house_small', 'house_medium', 'house_large', 'farm');
-CREATE TYPE experience_level AS ENUM ('beginner', 'intermediate', 'advanced', 'expert');
-CREATE TYPE match_status AS ENUM ('pending', 'accepted', 'rejected', 'expired');
-CREATE TYPE swipe_action AS ENUM ('like', 'pass', 'super_like');
-CREATE TYPE report_type AS ENUM ('spam', 'abuse', 'fraud', 'inappropriate_content', 'fake_listing', 'other');
-CREATE TYPE report_status AS ENUM ('pending', 'investigating', 'resolved', 'dismissed');
-CREATE TYPE booking_status AS ENUM ('pending', 'confirmed', 'completed', 'cancelled');
-CREATE TYPE payment_status AS ENUM ('pending', 'completed', 'failed', 'refunded');
+DO $$ BEGIN
+    CREATE TYPE user_role AS ENUM ('user', 'business', 'admin', 'moderator');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE verification_status AS ENUM ('pending', 'verified', 'rejected');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE pet_status AS ENUM ('available', 'pending', 'adopted', 'breeding', 'hidden', 'deceased');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE pet_type AS ENUM ('dog', 'cat', 'bird', 'rabbit', 'hamster', 'other');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE gender AS ENUM ('male', 'female', 'unknown');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE energy_level AS ENUM ('low', 'medium', 'high', 'very_high');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE size AS ENUM ('tiny', 'small', 'medium', 'large', 'giant');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE home_type AS ENUM ('apartment', 'house_small', 'house_medium', 'house_large', 'farm');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE experience_level AS ENUM ('beginner', 'intermediate', 'advanced', 'expert');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE match_status AS ENUM ('pending', 'accepted', 'rejected', 'expired');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE swipe_action AS ENUM ('like', 'pass', 'super_like');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE report_type AS ENUM ('spam', 'abuse', 'fraud', 'inappropriate_content', 'fake_listing', 'other');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE report_status AS ENUM ('pending', 'investigating', 'resolved', 'dismissed');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE booking_status AS ENUM ('pending', 'confirmed', 'completed', 'cancelled');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE payment_status AS ENUM ('pending', 'completed', 'failed', 'refunded');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- ============================================
 -- USERS TABLE
@@ -51,7 +125,8 @@ CREATE TABLE users (
     country VARCHAR(50),
     city VARCHAR(100),
     postal_code VARCHAR(20),
-    location GEOGRAPHY(POINT, 4326),
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
 
     -- Trust & Security
     trust_score DECIMAL(3,2) DEFAULT 0.00 CHECK (trust_score >= 0 AND trust_score <= 5),
@@ -75,7 +150,8 @@ CREATE TABLE users (
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_role ON users(role);
 CREATE INDEX idx_users_verification_status ON users(verification_status);
-CREATE INDEX idx_users_location ON users USING GIST(location);
+CREATE INDEX idx_users_latitude ON users(latitude);
+CREATE INDEX idx_users_longitude ON users(longitude);
 CREATE INDEX idx_users_created_at ON users(created_at);
 
 -- ============================================
@@ -177,7 +253,8 @@ CREATE TABLE pets (
     primary_photo_url TEXT,
 
     -- Location
-    location GEOGRAPHY(POINT, 4326),
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
     city VARCHAR(100),
     country VARCHAR(50),
 
@@ -208,10 +285,11 @@ CREATE TABLE pets (
 
 -- Indexes for pets
 CREATE INDEX idx_pets_owner_id ON pets(owner_id);
-CREATE INDEX idx_pets_pet_type ON pets(pet_type);
+CREATE INDEX idx_pets_type ON pets(type);
 CREATE INDEX idx_pets_status ON pets(status);
 CREATE INDEX idx_pets_breed ON pets(breed);
-CREATE INDEX idx_pets_location ON pets USING GIST(location);
+CREATE INDEX idx_pets_latitude ON pets(latitude);
+CREATE INDEX idx_pets_longitude ON pets(longitude);
 CREATE INDEX idx_pets_approved ON pets(approved);
 CREATE INDEX idx_pets_is_stray ON pets(is_stray);
 CREATE INDEX idx_pets_created_at ON pets(created_at);
@@ -342,7 +420,8 @@ CREATE TABLE business_profiles (
     city VARCHAR(100),
     country VARCHAR(50),
     postal_code VARCHAR(20),
-    location GEOGRAPHY(POINT, 4326),
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
 
     -- Verification
     verified BOOLEAN DEFAULT FALSE,
@@ -369,7 +448,8 @@ CREATE TABLE business_profiles (
 
 CREATE INDEX idx_business_profiles_user_id ON business_profiles(user_id);
 CREATE INDEX idx_business_profiles_business_type ON business_profiles(business_type);
-CREATE INDEX idx_business_profiles_location ON business_profiles USING GIST(location);
+CREATE INDEX idx_business_profiles_latitude ON business_profiles(latitude);
+CREATE INDEX idx_business_profiles_longitude ON business_profiles(longitude);
 CREATE INDEX idx_business_profiles_verified ON business_profiles(verified);
 
 -- ============================================

@@ -16,7 +16,7 @@ import { HealthController } from "./controllers/health.controller";
       useFactory: (config: ConfigService) => ({
         uri: config.get<string>(
           "MONGODB_URI",
-          "mongodb://localhost:27017/pet_platform_chat",
+          "mongodb://localhost:27017/pawhome_chat",
         ),
       }),
     }),
