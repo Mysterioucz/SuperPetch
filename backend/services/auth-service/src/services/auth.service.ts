@@ -38,8 +38,8 @@ export class AuthService {
     const user = this.userRepository.create({
       email,
       password: hashedPassword,
-      name,
-      userType: userType || "adopter",
+      displayName: name,
+      role: userType || "user",
     });
 
     await this.userRepository.save(user);
@@ -53,8 +53,8 @@ export class AuthService {
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
-        userType: user.userType,
+        name: user.displayName,
+        userType: user.role,
       },
     };
   }
@@ -87,8 +87,8 @@ export class AuthService {
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
-        userType: user.userType,
+        name: user.displayName,
+        userType: user.role,
       },
     };
   }
@@ -109,8 +109,8 @@ export class AuthService {
         user: {
           id: user.id,
           email: user.email,
-          name: user.name,
-          userType: user.userType,
+          name: user.displayName,
+          userType: user.role,
         },
       };
     } catch (error) {
@@ -122,7 +122,7 @@ export class AuthService {
     const payload = {
       sub: user.id,
       email: user.email,
-      userType: user.userType,
+      userType: user.role,
     };
 
     return this.jwtService.sign(payload);
