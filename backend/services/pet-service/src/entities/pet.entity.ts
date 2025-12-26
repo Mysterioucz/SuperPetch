@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  AfterLoad,
 } from "typeorm";
 
 @Entity("pets")
@@ -26,6 +27,18 @@ export class Pet {
     enum: ["dog", "cat", "bird", "rabbit", "hamster", "other"],
   })
   petType: string;
+
+  // Virtual field for frontend compatibility
+  species?: string;
+
+  @AfterLoad()
+  setComputed() {
+    // Map petType to species for frontend (capitalize first letter)
+    if (this.petType) {
+      this.species =
+        this.petType.charAt(0).toUpperCase() + this.petType.slice(1);
+    }
+  }
 
   @Column({ length: 100, nullable: true })
   breed: string;

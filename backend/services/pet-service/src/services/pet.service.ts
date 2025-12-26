@@ -18,8 +18,12 @@ export class PetService {
       vaccinated,
       spayedNeutered,
       microchipped,
+      species,
       ...petData
     } = createPetDto;
+
+    // Map frontend "species" to database "petType"
+    const petType = createPetDto.petType || species?.toLowerCase();
 
     // Parse temperament if it's a JSON string
     let parsedTemperament: string[] = [];
@@ -44,6 +48,7 @@ export class PetService {
 
     const pet = this.petRepository.create({
       ...petData,
+      petType,
       temperament: parsedTemperament,
       photos: imageUrls,
       vaccinated,
