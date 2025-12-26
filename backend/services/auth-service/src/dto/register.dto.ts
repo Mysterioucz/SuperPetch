@@ -1,4 +1,11 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength, IsOptional, IsIn } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+  IsOptional,
+  IsIn,
+} from "class-validator";
 
 export class RegisterDto {
   @IsEmail()
@@ -16,7 +23,7 @@ export class RegisterDto {
 
   @IsString()
   @IsOptional()
-  @IsIn(['adopter', 'breeder', 'both'])
+  @IsIn(["user", "business", "admin", "moderator"])
   userType?: string;
 
   @IsString()
