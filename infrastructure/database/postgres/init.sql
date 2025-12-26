@@ -2,6 +2,9 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 
+-- Optional: pgvector for ML embeddings (comment out if not available)
+-- CREATE EXTENSION IF NOT EXISTS "vector";
+
 -- ============================================
 -- ENUMS
 -- ============================================
@@ -263,7 +266,8 @@ CREATE TABLE pets (
     adoption_fee DECIMAL(10,2),
 
     -- ML Features (computed)
-    embedding VECTOR(128), -- For ML similarity search (requires pgvector extension)
+    -- embedding VECTOR(128), -- Uncomment if pgvector extension is installed
+    embedding_data TEXT, -- JSON string fallback for embeddings
 
     -- Moderation
     approved BOOLEAN DEFAULT FALSE,
@@ -285,7 +289,7 @@ CREATE TABLE pets (
 
 -- Indexes for pets
 CREATE INDEX idx_pets_owner_id ON pets(owner_id);
-CREATE INDEX idx_pets_type ON pets(type);
+CREATE INDEX idx_pets_pet_type ON pets(pet_type);
 CREATE INDEX idx_pets_status ON pets(status);
 CREATE INDEX idx_pets_breed ON pets(breed);
 CREATE INDEX idx_pets_latitude ON pets(latitude);
