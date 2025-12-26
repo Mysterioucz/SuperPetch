@@ -5,9 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Input from "../../components/ui/Input";
 import Select from "../../components/ui/Select";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function RegisterForm() {
   const router = useRouter();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,7 +45,7 @@ export default function RegisterForm() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_AUTH_SERVICE_URL}/api/v1/auth/register`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/register`,
         {
           method: "POST",
           headers: {
@@ -64,9 +66,8 @@ export default function RegisterForm() {
         throw new Error(data.message || "Registration failed");
       }
 
-      // Store token and user data, then redirect
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("userData", JSON.stringify(data.user));
+      // Login user and redirect
+      login(data.token, data.user);
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message || "Something went wrong");

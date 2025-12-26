@@ -1,17 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsLoggedIn(!!localStorage.getItem("token"));
-    }
-  }, []);
+  const { isLoggedIn, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white backdrop-blur-xl transition-all">
@@ -67,8 +60,7 @@ export default function Navbar() {
               </Link>
               <button
                 onClick={() => {
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("user");
+                  logout();
                   window.location.href = "/";
                 }}
                 className="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-100 hover:text-red-700 transition-all"

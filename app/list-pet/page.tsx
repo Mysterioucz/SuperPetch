@@ -55,7 +55,7 @@ export default function ListPetPage() {
       });
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_PET_SERVICE_URL}/api/v1/pets`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/pets`,
         {
           method: "POST",
           headers: {

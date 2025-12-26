@@ -9,11 +9,12 @@ import { GetPetsFilterDto } from "../dto/get-pets-filter.dto";
 export class PetService {
   constructor(
     @InjectRepository(Pet)
-    private petRepository: Repository<Pet>
+    private petRepository: Repository<Pet>,
   ) {}
 
   async create(createPetDto: CreatePetDto, files: Array<any>): Promise<Pet> {
-    const { temperament, ...petData } = createPetDto;
+    const { temperament, vaccinated, neutered, microchipped, ...petData } =
+      createPetDto;
 
     // Parse temperament if it's a JSON string
     let parsedTemperament: string[] = [];
@@ -32,7 +33,7 @@ export class PetService {
     const imageUrls = files
       ? files.map(
           (file) =>
-            `https://placehold.co/600x400?text=${encodeURIComponent(file.originalname)}`
+            `https://placehold.co/600x400?text=${encodeURIComponent(file.originalname)}`,
         )
       : [];
 
@@ -40,6 +41,9 @@ export class PetService {
       ...petData,
       temperament: parsedTemperament,
       images: imageUrls,
+      vaccinated,
+      neutered,
+      microchipped,
       // ownerId: user.id // TODO: Extract user from request
     });
 
@@ -77,14 +81,14 @@ export class PetService {
     if (location) {
       query.andWhere(
         "(pet.city ILIKE :location OR pet.state ILIKE :location)",
-        { location: `%${location}%` }
+        { location: `%${location}%` },
       );
     }
 
     if (search) {
       query.andWhere(
         "(pet.name ILIKE :search OR pet.description ILIKE :search)",
-        { search: `%${search}%` }
+        { search: `%${search}%` },
       );
     }
 

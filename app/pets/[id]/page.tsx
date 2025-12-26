@@ -22,7 +22,7 @@ export default function PetDetailPage() {
     const fetchPet = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_PET_SERVICE_URL}/api/v1/pets/${params.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/pets/${params.id}`
         );
         const data = await response.json();
 

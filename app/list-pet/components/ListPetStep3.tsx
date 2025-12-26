@@ -25,8 +25,6 @@ export default function ListPetStep3({
     if (!formData.city) newErrors.city = "City is required";
     if (!formData.state) newErrors.state = "State is required";
     if (!formData.zipCode) newErrors.zipCode = "ZIP Code is required";
-    if (formData.images.length === 0)
-      newErrors.images = "At least one photo is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

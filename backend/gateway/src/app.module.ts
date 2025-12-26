@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { HttpModule } from '@nestjs/axios';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { HttpModule } from "@nestjs/axios";
+import { ProxyController } from "./controllers/proxy.controller";
 
 @Module({
   imports: [
@@ -9,5 +10,6 @@ import { HttpModule } from '@nestjs/axios';
     }),
     HttpModule,
   ],
+  controllers: [ProxyController],
 })
 export class AppModule {}

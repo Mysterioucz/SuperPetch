@@ -42,7 +42,7 @@ export default function AdoptPage() {
 
       const response = await fetch(
         `${
-          process.env.NEXT_PUBLIC_PET_SERVICE_URL
+          process.env.NEXT_PUBLIC_API_URL
         }/api/v1/pets?${queryParams.toString()}`
       );
       if (response.ok) {
