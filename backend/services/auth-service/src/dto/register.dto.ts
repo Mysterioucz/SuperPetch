@@ -23,8 +23,13 @@ export class RegisterDto {
 
   @IsString()
   @IsOptional()
-  @IsIn(["user", "business", "admin", "moderator"])
+  @IsIn(["adopter", "breeder", "both"])
   userType?: string;
+
+  @IsString()
+  @IsOptional()
+  @IsIn(["user", "business", "admin", "moderator"])
+  role?: string;
 
   @IsString()
   @IsOptional()

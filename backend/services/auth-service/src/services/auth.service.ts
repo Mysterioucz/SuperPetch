@@ -19,8 +19,35 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  /**
+   * Map frontend userType to database role
+   * Frontend: 'adopter', 'breeder', 'both'
+   * Database: 'user', 'business', 'admin', 'moderator'
+   */
+  private mapUserTypeToRole(userType: string): string {
+    const mapping: Record<string, string> = {
+      adopter: "user",
+      breeder: "business",
+      both: "business",
+    };
+    return mapping[userType] || "user";
+  }
+
+  /**
+   * Map database role to frontend userType
+   */
+  private mapRoleToUserType(role: string): string {
+    const mapping: Record<string, string> = {
+      user: "adopter",
+      business: "breeder",
+      admin: "admin",
+      moderator: "moderator",
+    };
+    return mapping[role] || "adopter";
+  }
+
   async register(registerDto: RegisterDto) {
-    const { email, password, name, userType } = registerDto;
+    const { email, password, name, userType, role } = registerDto;
 
     // Check if user already exists
     const existingUser = await this.userRepository.findOne({
@@ -39,7 +66,7 @@ export class AuthService {
       email,
       password: hashedPassword,
       displayName: name,
-      role: userType || "user",
+      role: role || this.mapUserTypeToRole(userType || "adopter"),
     });
 
     await this.userRepository.save(user);
@@ -54,7 +81,7 @@ export class AuthService {
         id: user.id,
         email: user.email,
         name: user.displayName,
-        userType: user.role,
+        userType: this.mapRoleToUserType(user.role),
       },
     };
   }
@@ -88,7 +115,7 @@ export class AuthService {
         id: user.id,
         email: user.email,
         name: user.displayName,
-        userType: user.role,
+        userType: this.mapRoleToUserType(user.role),
       },
     };
   }
@@ -110,7 +137,7 @@ export class AuthService {
           id: user.id,
           email: user.email,
           name: user.displayName,
-          userType: user.role,
+          userType: this.mapRoleToUserType(user.role),
         },
       };
     } catch (error) {
@@ -122,7 +149,7 @@ export class AuthService {
     const payload = {
       sub: user.id,
       email: user.email,
-      userType: user.role,
+      userType: this.mapRoleToUserType(user.role),
     };
 
     return this.jwtService.sign(payload);
