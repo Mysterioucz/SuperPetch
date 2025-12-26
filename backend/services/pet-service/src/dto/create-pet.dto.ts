@@ -5,13 +5,12 @@ export class CreatePetDto {
   @IsString()
   name: string;
 
-  @IsOptional()
   @IsString()
-  petType?: string;
+  species: string; // Frontend sends species (Cat, Dog, Bird, Rabbit)
 
   @IsOptional()
   @IsString()
-  species?: string; // Frontend uses species (Cat, Dog, Bird, Rabbit), maps to petType
+  petType?: string; // Generated from species (lowercase)
 
   @IsString()
   breed: string;

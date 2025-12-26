@@ -21,24 +21,15 @@ export class Pet {
   @Column({ length: 100 })
   name: string;
 
+  @Column({ length: 50, nullable: true })
+  species: string;
+
   @Column({
     name: "pet_type",
     type: "enum",
     enum: ["dog", "cat", "bird", "rabbit", "hamster", "other"],
   })
   petType: string;
-
-  // Virtual field for frontend compatibility
-  species?: string;
-
-  @AfterLoad()
-  setComputed() {
-    // Map petType to species for frontend (capitalize first letter)
-    if (this.petType) {
-      this.species =
-        this.petType.charAt(0).toUpperCase() + this.petType.slice(1);
-    }
-  }
 
   @Column({ length: 100, nullable: true })
   breed: string;

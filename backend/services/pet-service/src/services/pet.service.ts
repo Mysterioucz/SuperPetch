@@ -22,8 +22,9 @@ export class PetService {
       ...petData
     } = createPetDto;
 
-    // Map frontend "species" to database "petType"
+    // Map frontend "species" to database "petType" (lowercase enum)
     const petType = createPetDto.petType || species?.toLowerCase();
+    // Keep species as-is for frontend (capitalized)
 
     // Parse temperament if it's a JSON string
     let parsedTemperament: string[] = [];
@@ -48,6 +49,7 @@ export class PetService {
 
     const pet = this.petRepository.create({
       ...petData,
+      species,
       petType,
       temperament: parsedTemperament,
       photos: imageUrls,

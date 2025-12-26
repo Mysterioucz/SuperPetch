@@ -206,6 +206,7 @@ CREATE TABLE pets (
 
     -- Basic Info
     name VARCHAR(100) NOT NULL,
+    species VARCHAR(50), -- Frontend-friendly capitalized name (Dog, Cat, Bird, Rabbit)
     pet_type pet_type NOT NULL,
     breed VARCHAR(100),
     mixed_breed BOOLEAN DEFAULT FALSE,
